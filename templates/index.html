@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Crewing Survey Dashboard</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 2rem; background: #f8f9fa; color: #333; }
+        h1 { color: #1a202c; }
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+        th { background-color: #edf2f7; color: #2d3748; font-weight: 600; }
+        tr:hover { background-color: #f7fafc; }
+        .tag { background: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-size: 0.8rem; display: inline-block; margin: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>🎬 Film Crewing Survey Dashboard</h1>
+        <p>Connected to Railway PostgreSQL Database</p>
+        <div id="stats">Loading survey summary...</div>
+    </div>
+
+    <div class="card">
+        <h2>Production Role Hires</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Respondent</th>
+                    <th>Production Name</th>
+                    <th>Type</th>
+                    <th>Role Hired</th>
+                    <th>Ease (1-10)</th>
+                    <th>Performance</th>
+                    <th>Sourcing Channels</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr><td colspan="7">Loading data...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('/api/data')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('stats').innerHTML = 
+                    `<strong>${data.length}</strong> total role hire records retrieved.`;
+
+                const tbody = document.getElementById('table-body');
+                tbody.innerHTML = '';
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    
+                    const channels = item.sourcing_channels
+                        .split(', ')
+                        .map(ch => `<span class="tag">${ch}</span>`)
+                        .join(' ');
+
+                    row.innerHTML = `
+                        <td><strong>${item.respondent_id}</strong> (${item.respondent_role || 'N/A'})</td>
+                        <td>${item.production_name}</td>
+                        <td>${item.production_type}</td>
+                        <td><strong>${item.role_hired}</strong></td>
+                        <td>${item.ease_of_finding !== null ? item.ease_of_finding : '-'}</td>
+                        <td>${item.performance_rating !== null ? item.performance_rating + '/10' : '-'}</td>
+                        <td>${channels}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(err => {
+                console.error("Error fetching data:", err);
+                document.getElementById('stats').innerText = "Failed to load database records.";
+            });
+    </script>
+</body>
+</html>
