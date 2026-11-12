@@ -1,0 +1,13 @@
+hire_id,production_id,role_hired,ease_of_finding,performance_rating,would_hire_again,flaked_last_minute
+1,1,Director of Photography (DP),5,8,Y,Y
+2,2,Line Producer / UPM,1,1,N,N
+3,3,Director of Photography (DP),8,10,Y,N
+4,4,Gaffer,3,8,Y,N
+5,5,Director of Photography (DP),8,10,Y,N
+6,6,1st Assistant Camera (1st AC),6,10,Y,N
+7,7,Sound Recordist / Mixer,5,9,Y,N
+8,8,Director of Photography (DP),9,10,Y,N
+9,9,Sound Recordist / Mixer,3,7,Y,N
+10,10,Director of Photography (DP),6,8,Y,N
+11,11,Sound Recordist / Mixer,4,9,Y,N
+12,12,Gaffer,7,10,Y,N
