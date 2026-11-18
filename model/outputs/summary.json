@@ -1,0 +1,131 @@
+{
+  "hires": 29,
+  "producers": 10,
+  "train_n": 20,
+  "test_n": 9,
+  "features": [
+    "ease",
+    "Asking Classmates",
+    "Asking Someone You Already Know",
+    "Asking Someone You've Worked With",
+    "Instagram ISOs (\"In Search Of\")",
+    "Word-of-mouth / Peer Recommendations"
+  ],
+  "train_sse": {
+    "1": 120.0,
+    "2": 73.5,
+    "3": 46.0,
+    "4": 36.0,
+    "5": 28.5,
+    "6": 22.0
+  },
+  "test_sse": {
+    "1": 56.7,
+    "2": 51.4,
+    "3": 42.4,
+    "4": 43.2,
+    "5": 35.9,
+    "6": 34.2
+  },
+  "test_sse_drop_pct_k1_to_k": 25.3,
+  "centers": [
+    {
+      "ease": 7.86,
+      "Asking Classmates": 0.0,
+      "Asking Someone You Already Know": 1.0,
+      "Asking Someone You've Worked With": 0.43,
+      "Instagram ISOs (\"In Search Of\")": 0.0,
+      "Word-of-mouth / Peer Recommendations": -0.0,
+      "segment": "Segment 1"
+    },
+    {
+      "ease": 3.17,
+      "Asking Classmates": 1.0,
+      "Asking Someone You Already Know": 1.0,
+      "Asking Someone You've Worked With": 1.0,
+      "Instagram ISOs (\"In Search Of\")": 0.5,
+      "Word-of-mouth / Peer Recommendations": 1.0,
+      "segment": "Segment 3"
+    },
+    {
+      "ease": 6.0,
+      "Asking Classmates": 0.29,
+      "Asking Someone You Already Know": 0.14,
+      "Asking Someone You've Worked With": 0.0,
+      "Instagram ISOs (\"In Search Of\")": 0.71,
+      "Word-of-mouth / Peer Recommendations": 0.71,
+      "segment": "Segment 2"
+    }
+  ],
+  "baseline_one_group": {
+    "performance": 8.241,
+    "rehire_yes": 0.793,
+    "flaked_yes": 0.138,
+    "hires": 29
+  },
+  "v1_segments": [
+    {
+      "segment": "Segment 1",
+      "hires": 11,
+      "ease": 7.36,
+      "Asking Classmates": 0.09,
+      "Asking Someone You Already Know": 0.91,
+      "Asking Someone You've Worked With": 0.64,
+      "Instagram ISOs (\"In Search Of\")": 0.0,
+      "Word-of-mouth / Peer Recommendations": 0.0,
+      "performance": 9.55,
+      "rehire_yes": 0.91,
+      "flaked_yes": 0.09
+    },
+    {
+      "segment": "Segment 2",
+      "hires": 11,
+      "ease": 5.09,
+      "Asking Classmates": 0.45,
+      "Asking Someone You Already Know": 0.09,
+      "Asking Someone You've Worked With": 0.0,
+      "Instagram ISOs (\"In Search Of\")": 0.73,
+      "Word-of-mouth / Peer Recommendations": 0.73,
+      "performance": 7.45,
+      "rehire_yes": 0.82,
+      "flaked_yes": 0.0
+    },
+    {
+      "segment": "Segment 3",
+      "hires": 7,
+      "ease": 3.86,
+      "Asking Classmates": 1.0,
+      "Asking Someone You Already Know": 1.0,
+      "Asking Someone You've Worked With": 0.86,
+      "Instagram ISOs (\"In Search Of\")": 0.43,
+      "Word-of-mouth / Peer Recommendations": 1.0,
+      "performance": 7.43,
+      "rehire_yes": 0.57,
+      "flaked_yes": 0.43
+    }
+  ],
+  "value": {
+    "assumptions_FICTIONAL": {
+      "vet_cost": 15.0,
+      "flake_cost": 300.0,
+      "flakes_prevented": 0.5
+    },
+    "segment_net_if_vetted": {
+      "Segment 1": -15.0,
+      "Segment 2": -165.0,
+      "Segment 3": 345.0
+    },
+    "vet_segments": [
+      "Segment 3"
+    ],
+    "baseline_vet_everyone": {
+      "hires_vetted": 29,
+      "net": 165.0
+    },
+    "v1_vet_targeted": {
+      "hires_vetted": 7,
+      "net": 345.0
+    },
+    "v1_minus_baseline": 180.0
+  }
+}
