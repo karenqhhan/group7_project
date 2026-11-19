@@ -4,21 +4,20 @@
 
 The model sets the discover page (personalized recommendations) for the person posting a job, based on their past hires.
 
-`python model.py` loads the survey, fits v1, prints the elbow on the training hires, the baseline vs v1 spread on the test hires, the pattern profiles, the value, and the discover page for a new job post. Every number is written to `outputs/summary.json`, and the chart to `outputs/elbow.png`.
+`python model.py` loads the survey, fits v1, prints the elbow on all 29 hires, the baseline vs v1 spread, the pattern profiles, the value, and the discover page for a new job post. Every number is written to `outputs/summary.json`, and the chart to `outputs/elbow.png`.
 
 To set the discover page for a new post: `python model.py 6` (any producer number 1–10 uses that producer's past hires).
 
 ## Data
 - Source: NYU Student Film Crewing Survey (Google Form responses collected 14 Oct – 17 Nov 2026, about producers' past productions). The repo holds `data/survey_anonymized.xlsx`: names, emails, production titles and free-text answers blanked.
 - 10 producers, each reporting up to 3 hires, gives 29 hires (one hire slot was blank). One row per hire.
-- Split: 70/30 random (seed 42), giving 20 training hires and 9 test hires.
+- No train/test split: with 29 hires (fewer than 30), the assignment says to fit on the whole data set.
 
 ## Model
-- Family: k-means, k = 3. Features standardised on the training rows. No outcome column.
+- Family: k-means, k = 3. Features standardised on all 29 hires. No outcome column.
 - Features: a 0/1 flag for each search method used in at least 10 hires (Asking Classmates, Asking Someone You Already Know, Asking Someone You've Worked With, Instagram ISOs, Word-of-mouth / Peer Recommendations). The groups describe **how producers search**.
 - Not used to form groups: ease of finding, performance, rehire and dropouts. They describe and check the groups. Also left out: rare methods (Tisch Database, Cold-Emailing, Facebook, WhatsApp, other social, used in 1–3 hires); names, emails and free-text answers.
-- k chosen from the elbow on the training hires only: spread 100 → 61 → 34.4 → 26.4 → 19.5 → 13.5. Three groups remove 66%; each extra group after that removes 8 or less.
-- Test hires are assigned to the trained centres (no refit): baseline k = 1 spread 50.4 vs v1 k = 3 31.6 (37% lower).
+- k chosen from the elbow on all 29 hires: spread 145 → 92.7 → 60.1 → 47.1 → 36.3 → 28.4. Three groups remove 59% of the spread compared with one group (baseline); each extra group after that removes 13 or less.
 - Check: ease of finding was never an input, yet it differs across the groups (7.3 / 5.1 / 4.1 out of 10; Kruskal-Wallis p = 0.036). How a producer searches predicts how hard the role is to fill.
 - Baseline: one group (k = 1), so every filmmaker gets the same discover page.
 

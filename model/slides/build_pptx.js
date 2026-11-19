@@ -28,20 +28,20 @@ s.addText(C.title_lines.map((t, i, a) => ({ text: t, options: { breakLine: i < a
 // ---------------------------------------------------------------- 2 Patterns + proof
 s = pres.addSlide();
 title(s, C.s2_title);
-const HW = 5.9, bh = 1.78, bgap = 0.1;
+const HW = 5.9, bh = 1.7, bgap = 0.2;
 C.segs.forEach(([h, sub, q, items], i) => {
   const y = 1.42 + i * (bh + bgap);
   s.addShape(pres.shapes.RECTANGLE, { x: X, y, w: HW, h: bh, fill: { color: "FFFFFF" }, line: { color: K, width: 0.75 } });
-  text(s, [{ text: h + " ", options: { bold: true, fontSize: 13 } }, { text: "(" + sub + ") " }, { text: q, options: { italic: true } }],
-    { x: X + 0.12, y: y + 0.06, w: HW - 0.24, h: 0.3 });
-  text(s, list(items), { x: X + 0.12, y: y + 0.38, w: HW - 0.24, h: bh - 0.42, paraSpaceAfter: 2 });
+  text(s, [{ text: h + " ", options: { bold: true, fontSize: 15 } }, { text: "(" + sub + ") " }, { text: q, options: { italic: true } }],
+    { x: X + 0.12, y: y + 0.08, w: HW - 0.24, h: 0.5, fontSize: 12.5 });
+  text(s, list(items), { x: X + 0.12, y: y + 0.62, w: HW - 0.24, h: bh - 0.66, fontSize: 13, paraSpaceAfter: 4 });
 });
 const PX = X + HW + 0.4, PW = W - HW - 0.4, CW = PW * 0.8, CH = CW * 4 / 6.5;
 text(s, C.proof_title, { x: PX, y: 1.42, w: PW, h: 0.28, fontSize: 13, bold: true });
 s.addImage({ path: path.join(__dirname, "../outputs/elbow.png"), x: PX, y: 1.72, w: CW, h: CH, altText: "Chart: how much hires differ from their group, by number of groups" });
 text(s, C.proof.map(([b, t], i, a) => [
   { text: b, options: { bold: true, bullet: true } }, { text: t, options: { breakLine: i < a.length - 1 } }]).flat(),
-  { x: PX, y: 1.78 + CH, w: PW, h: 7.15 - (1.78 + CH), fontSize: 9.5, paraSpaceAfter: 2 });
+  { x: PX, y: 1.8 + CH, w: PW, h: 7.15 - (1.8 + CH), fontSize: 12, paraSpaceAfter: 4 });
 
 }
 // ---------------------------------------------------------------- 3 Recommendations + value

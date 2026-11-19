@@ -9,8 +9,8 @@ li = lambda items: "".join(f"<li>{E(t)}</li>" for t in items)
 rows = lambda head, body: "<tr>" + "".join(f"<th>{E(h)}</th>" for h in head) + "</tr>" + "".join(
     "<tr>" + "".join(f"<td>{E(c)}</td>" for c in r) + "</tr>" for r in body)
 
-segs = "".join(f"""<div class="seg"><h2>{E(h)} <span class="n">({E(sub)})</span> <i class="n">{E(q)}</i></h2>
-  <ul>{li(items)}</ul></div>""" for h, sub, q, items in C["segs"])
+segs = "".join(f"""<div class="seg" style="padding:8pt 12pt"><h2 style="font-size:15pt">{E(h)} <span class="n">({E(sub)})</span> <i class="n">{E(q)}</i></h2>
+  <ul class="segl">{li(items)}</ul></div>""" for h, sub, q, items in C["segs"])
 proof = "".join(f"<li><b>{E(a)}</b>{E(b)}</li>" for a, b in C["proof"])
 
 html = f"""<!doctype html>
@@ -32,6 +32,8 @@ ul, ol {{ margin: 0; padding-left: 15pt; }}
 table {{ border-collapse: collapse; width: 100%; }}
 th, td {{ border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; vertical-align: top; }}
 .big td, .big th {{ font-size: 13pt; padding: 5pt 6pt; }}
+.segl li {{ font-size: 13.5pt; margin-bottom: 5pt; }}
+.proofl li {{ font-size: 12pt; margin-bottom: 4pt; }}
 .title {{ display: flex; flex-direction: column; justify-content: center; }}
 .title h1 {{ font-size: 30pt; }}
 .title p {{ font-size: 16pt; margin: 4pt 0; }}
@@ -45,11 +47,11 @@ th, td {{ border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; ver
 <section class="slide">
   <h1>{E(C["s2_title"])}</h1>
   <div class="cols" style="gap:0.4in">
-    <div class="col" style="display:flex;flex-direction:column;gap:7pt">{segs}</div>
+    <div class="col" style="display:flex;flex-direction:column;gap:14pt">{segs}</div>
     <div class="col">
       <h2>{E(C["proof_title"])}</h2>
       <img src="../outputs/elbow.png" alt="Chart: how much hires differ from their group, by number of groups" style="width:80%">
-      <ul class="small">{proof}</ul>
+      <ul class="proofl">{proof}</ul>
     </div>
   </div>
 </section>

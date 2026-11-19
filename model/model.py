@@ -10,8 +10,8 @@ Groups are formed from HOW producers searched (5 search methods). Ease of findin
 (1-10) is NOT used to form groups; it is the outcome the groups are checked
 against, together with ratings, rehire and dropouts.
 
-Standalone: loads the survey, fits v1, prints the fit evaluation (elbow on the
-training hires; baseline vs v1 spread on the test hires), and returns the
+Standalone: loads the survey, fits v1, prints the fit evaluation (elbow on all
+29 hires; fewer than 30, so no train/test split), and returns the
 discover page for a new job post.
 
     python model.py          # new post by producer 6, using their past hires
@@ -31,7 +31,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 HERE = Path(__file__).parent
@@ -53,22 +52,20 @@ hires.to_csv(OUT / "hires_clean.csv", index=False)
 # used 1-3 times, are too rare to define a group). Everything else describes the groups.
 FEATURES = [m for m in METHODS if hires[m].sum() >= 10]
 
-train, test = train_test_split(hires, test_size=0.30, random_state=SEED)
-scaler = StandardScaler().fit(train[FEATURES])
-X_train, X_test = scaler.transform(train[FEATURES]), scaler.transform(test[FEATURES])
+# Fewer than 30 hires (29), so per the assignment there is no train/test split:
+# the scaling and the groups are fitted on all 29 hires.
+scaler = StandardScaler().fit(hires[FEATURES])
+X_all = scaler.transform(hires[FEATURES])
 
 # ------------------------------------------------------------------ fit k = 1..6
-models, train_sse, test_sse = {}, {}, {}
+models, sse = {}, {}
 for k in K_RANGE:
-    km = KMeans(n_clusters=k, n_init=50, random_state=SEED).fit(X_train)
+    km = KMeans(n_clusters=k, n_init=50, random_state=SEED).fit(X_all)
     models[k] = km
-    train_sse[k] = km.inertia_
-    d2 = ((X_test[:, None, :] - km.cluster_centers_[None, :, :]) ** 2).sum(axis=2)
-    test_sse[k] = d2.min(axis=1).sum()  # trained centres, no refit
+    sse[k] = km.inertia_
 model = models[K_CHOSEN]
 
 hires["cluster"] = model.predict(scaler.transform(hires[FEATURES]))
-hires["set"] = np.where(hires.index.isin(train.index), "train", "test")
 # Label segments 1..k by average ease of their hires, easiest first.
 order = hires.groupby("cluster")["ease"].mean().sort_values(ascending=False).index
 label = {c: f"Segment {i + 1}" for i, c in enumerate(order)}
@@ -131,15 +128,15 @@ value = {
 plt.rcParams.update({"font.family": "Arial", "font.size": 13})
 fig, ax = plt.subplots(figsize=(6.5, 4.0), dpi=200)
 ks = list(K_RANGE)
-ax.plot(ks, [train_sse[k] for k in ks], "o-", color="black", lw=2)
+ax.plot(ks, [sse[k] for k in ks], "o-", color="black", lw=2)
 ax.axvline(K_CHOSEN, color="#999", lw=1, ls=":")
 ax.set_xlabel("Number of groups")
 ax.set_ylabel("How much hires differ\nfrom their group (lower = tighter)")
 ax.set_xticks(ks)
 ax.spines[["top", "right"]].set_visible(False)
-ax.set_title(f"Built on {len(train)} training hires", fontsize=13, loc="left")
-ax.annotate("3 groups: big drop stops here", xy=(K_CHOSEN, train_sse[K_CHOSEN]),
-            xytext=(K_CHOSEN + 0.4, train_sse[2]), fontsize=12, arrowprops=dict(arrowstyle="->"))
+ax.set_title(f"Built on all {len(hires)} hires", fontsize=13, loc="left")
+ax.annotate("3 groups: big drop stops here", xy=(K_CHOSEN, sse[K_CHOSEN]),
+            xytext=(K_CHOSEN + 0.4, sse[2]), fontsize=12, arrowprops=dict(arrowstyle="->"))
 fig.tight_layout()
 fig.savefig(OUT / "elbow.png")
 
@@ -147,10 +144,8 @@ fig.savefig(OUT / "elbow.png")
 r1 = lambda d: {k: round(float(v), 1) for k, v in d.items()}
 summary = {
     "hires": len(hires), "producers": int(hires.producer.nunique()),
-    "train_n": len(train), "test_n": len(test), "features": FEATURES,
-    "train_sse": r1(train_sse),
-    "test_sse_baseline_k1": round(float(test_sse[1]), 1), "test_sse_v1": round(float(test_sse[K_CHOSEN]), 1),
-    "test_sse_drop_pct_k1_to_k": round(100 * (1 - test_sse[K_CHOSEN] / test_sse[1]), 1),
+    "split": "none (29 hires < 30): fitted on all hires", "features": FEATURES,
+    "sse": r1(sse), "sse_drop_pct_k1_to_k": round(100 * (1 - sse[K_CHOSEN] / sse[1]), 1),
     "centers": centers.round(2).to_dict(orient="records"),
     "baseline_one_group": baseline,
     "v1_segments": profile.reset_index().to_dict(orient="records"),
@@ -159,10 +154,10 @@ summary = {
 (OUT / "summary.json").write_text(json.dumps(summary, indent=2))
 hires.to_csv(OUT / "hires_segmented.csv", index=False)
 
-print("Elbow, within-group spread on training hires:")
+print("Elbow, within-group spread on all 29 hires:")
 for k in ks:
-    print(f"  k={k}: {train_sse[k]:6.1f}")
-print(f"\nTest hires (trained centres, no refit): baseline k=1 {test_sse[1]:.1f}  vs  v1 k={K_CHOSEN} {test_sse[K_CHOSEN]:.1f}")
+    print(f"  k={k}: {sse[k]:6.1f}")
+print(f"\nBaseline k=1 {sse[1]:.1f}  vs  v1 k={K_CHOSEN} {sse[K_CHOSEN]:.1f}")
 print(f"\nBaseline (one group): {baseline}\n")
 print(profile.T.to_string(), "\n")
 print("Value (FICTIONAL ASSUMPTIONS):", json.dumps(value, indent=2), "\n")

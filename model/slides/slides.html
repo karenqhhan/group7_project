@@ -17,6 +17,8 @@ ul, ol { margin: 0; padding-left: 15pt; }
 table { border-collapse: collapse; width: 100%; }
 th, td { border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; vertical-align: top; }
 .big td, .big th { font-size: 13pt; padding: 5pt 6pt; }
+.segl li { font-size: 13.5pt; margin-bottom: 5pt; }
+.proofl li { font-size: 12pt; margin-bottom: 4pt; }
 .title { display: flex; flex-direction: column; justify-content: center; }
 .title h1 { font-size: 30pt; }
 .title p { font-size: 16pt; margin: 4pt 0; }
@@ -28,16 +30,16 @@ th, td { border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; vert
 </section>
 
 <section class="slide">
-  <h1>Student filmmakers search for crew in three distinct ways, and how they search predicts how hard the role is to fill</h1>
+  <h1>Filmmakers find crew in three different ways, and the way they search shows how hard the role is to fill</h1>
   <div class="cols" style="gap:0.4in">
-    <div class="col" style="display:flex;flex-direction:column;gap:7pt"><div class="seg"><h2>1 · Trusted network <span class="n">(11 hires · 3 of 10 producers)</span> <i class="n">“I already know who to call.”</i></h2>
-  <ul><li>How they search: only their own circle; 82% asked someone they already knew, 55% someone they had worked with, and no other channel</li><li>Results: easiest to fill (7.3 out of 10, where 10 = very easy); hires rated 9.5 out of 10; 91% would hire again; 1 of 11 roles had a last-minute dropout</li></ul></div><div class="seg"><h2>2 · Open search <span class="n">(10 hires · 4 of 10 producers)</span> <i class="n">“I need someone new.”</i></h2>
-  <ul><li>How they search: in public; 80% posted Instagram ISOs, 80% asked for referrals, only 1 of 10 asked someone they knew. Mostly specialist and support roles (art, gaffer, grip, colorist, makeup)</li><li>Results: moderately hard to fill (5.1 out of 10); hires rated 7.4; 80% would hire again; no dropouts</li></ul></div><div class="seg"><h2>3 · Scramble <span class="n">(8 hires · 3 of 10 producers)</span> <i class="n">“I’m trying everything.”</i></h2>
-  <ul><li>How they search: every channel at once; all asked classmates and people they knew, 7 of 8 also asked for referrals. 5 of 8 were senior or advanced productions</li><li>Results: hardest to fill (4.1 out of 10); hires rated 7.5; 63% would hire again; 3 of 8 roles had a last-minute dropout</li></ul></div></div>
+    <div class="col" style="display:flex;flex-direction:column;gap:14pt"><div class="seg" style="padding:8pt 12pt"><h2 style="font-size:15pt">1 · Trusted network <span class="n">(11 hires · 3 producers)</span> <i class="n">“I already know who to call.”</i></h2>
+  <ul class="segl"><li>Search: only people they know or have worked with</li><li>Result: easiest to fill (7.3 / 10); best hires (9.5 / 10); 91% would hire again</li></ul></div><div class="seg" style="padding:8pt 12pt"><h2 style="font-size:15pt">2 · Open search <span class="n">(10 hires · 4 producers)</span> <i class="n">“I need someone new.”</i></h2>
+  <ul class="segl"><li>Search: Instagram posts and referrals (80% each); mostly specialist roles like art, gaffer, colorist</li><li>Result: medium to fill (5.1 / 10); hires 7.4 / 10; no dropouts</li></ul></div><div class="seg" style="padding:8pt 12pt"><h2 style="font-size:15pt">3 · Scramble <span class="n">(8 hires · 3 producers)</span> <i class="n">“I’m trying everything.”</i></h2>
+  <ul class="segl"><li>Search: every channel at once; mostly senior productions</li><li>Result: hardest to fill (4.1 / 10); 3 of 8 roles had a last-minute dropout</li></ul></div></div>
     <div class="col">
-      <h2>Proof: the three patterns are real</h2>
+      <h2>Why we trust these groups</h2>
       <img src="../outputs/elbow.png" alt="Chart: how much hires differ from their group, by number of groups" style="width:80%">
-      <ul class="small"><li><b>How the groups were found: </b>a clustering model (k-means) sorted the 29 hires into groups of similar hires using only how the producer searched: the 5 most used search methods. Ease of finding, ratings and dropouts were left out, so they are a fair check on the groups.</li><li><b>Why three groups: </b>the chart shows how much hires still differ from their group (lower = tighter). Three groups cut that from 100 to 34, a 66% drop; each extra group after that helps by 8 or less.</li><li><b>Does it hold for new hires? </b>We hid 9 of the 29 hires (about 30%) while building the groups, then sorted them in afterwards. Three groups described them 37% better than one group for everyone (50.4 → 31.6).</li><li><b>Search predicts difficulty: </b>the model never saw ease of finding, yet the groups split cleanly on it (7.3 vs 5.1 vs 4.1 out of 10). A gap this large would happen by chance less than 4% of the time.</li><li><b>Data: </b>our NYU Student Film Crewing Survey, answered Oct–Nov 2026 about past productions: 10 producers, 29 hires.</li></ul>
+      <ul class="proofl"><li><b>How: </b>a clustering model grouped all 29 hires by how the producer searched. It never saw how hard the role was or how it went.</li><li><b>Three groups: </b>the line drops sharply up to 3 groups, then flattens. More groups add little.</li><li><b>Better than one group: </b>3 groups cut the differences within each group by 59% compared with treating everyone the same (145 → 60).</li><li><b>Search predicts difficulty: </b>groups split cleanly on ease of finding (7.3 / 5.1 / 4.1, 10 = easy), which the model never saw.</li><li><b>Data: </b>our survey of 10 NYU student producers, Oct–Nov 2026. All 29 hires used (fewer than 30, so no test split).</li></ul>
     </div>
   </div>
 </section>
