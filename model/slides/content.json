@@ -1,0 +1,53 @@
+{
+  "title": "How can we identify distinct crew-hiring patterns to improve recruitment recommendations for student filmmakers?",
+  "title_lines": ["[Team name]", "[Members]", "github.com/karenqhhan/group7_project · model script: model/model.py"],
+
+  "s2_title": "Student filmmakers search for crew in three distinct ways, and how they search predicts how hard the role is to fill",
+  "segs": [
+    ["1 · Trusted network", "11 hires · 3 of 10 producers", "“I already know who to call.”", [
+      "How they search: only their own circle; 82% asked someone they already knew, 55% someone they had worked with, and no other channel",
+      "Results: easiest to fill (7.3 out of 10, where 10 = very easy); hires rated 9.5 out of 10; 91% would hire again; 1 of 11 roles had a last-minute dropout"]],
+    ["2 · Open search", "10 hires · 4 of 10 producers", "“I need someone new.”", [
+      "How they search: in public; 80% posted Instagram ISOs, 80% asked for referrals, only 1 of 10 asked someone they knew. Mostly specialist and support roles (art, gaffer, grip, colorist, makeup)",
+      "Results: moderately hard to fill (5.1 out of 10); hires rated 7.4; 80% would hire again; no dropouts"]],
+    ["3 · Scramble", "8 hires · 3 of 10 producers", "“I’m trying everything.”", [
+      "How they search: every channel at once; all asked classmates and people they knew, 7 of 8 also asked for referrals. 5 of 8 were senior or advanced productions",
+      "Results: hardest to fill (4.1 out of 10); hires rated 7.5; 63% would hire again; 3 of 8 roles had a last-minute dropout"]]
+  ],
+  "proof_title": "Proof: the three patterns are real",
+  "proof": [
+    ["How the groups were found: ", "a clustering model (k-means) sorted the 29 hires into groups of similar hires using only how the producer searched: the 5 most used search methods. Ease of finding, ratings and dropouts were left out, so they are a fair check on the groups."],
+    ["Why three groups: ", "the chart shows how much hires still differ from their group (lower = tighter). Three groups cut that from 100 to 34, a 66% drop; each extra group after that helps by 8 or less."],
+    ["Does it hold for new hires? ", "We hid 9 of the 29 hires (about 30%) while building the groups, then sorted them in afterwards. Three groups described them 37% better than one group for everyone (50.4 → 31.6)."],
+    ["Search predicts difficulty: ", "the model never saw ease of finding, yet the groups split cleanly on it (7.3 vs 5.1 vs 4.1 out of 10). A gap this large would happen by chance less than 4% of the time."],
+    ["Data: ", "our NYU Student Film Crewing Survey, answered Oct–Nov 2026 about past productions: 10 producers, 29 hires."]
+  ],
+
+  "s3_title": "Matching each poster’s discover page to their hiring pattern puts help where the search time is: Open search and Scramble hold 76% of it",
+  "how_title": "How personalization works",
+  "how": [
+    "A filmmaker posts a job",
+    "The app looks at how they searched for their past hires and places them in their closest hiring pattern",
+    "Their discover page is built for that pattern"
+  ],
+  "example_title": "Example",
+  "example": "Producer 6 posts a job. Past hires (DP, UPM, art director) were found through classmates, people they knew and referrals → Scramble → curated shortlist first. Those roles were in fact hard to fill: 1 to 3 out of 10.",
+  "pages_head": ["Poster’s pattern", "Their discover page", "Why"],
+  "pages": [
+    ["1 · Trusted network", "Re-book page: past collaborators first", "They already have people; a shortlist saves only 1.4 hours a post"],
+    ["2 · Open search", "Discovery feed of new candidates matched to the role", "They need strangers; a shortlist saves 2.5 hours a post"],
+    ["3 · Scramble", "Curated shortlist first, then the discovery feed", "Hardest to fill; a shortlist saves 2.9 hours a post"]
+  ],
+  "ease_title": "What “ease of finding” means",
+  "ease": "Each producer rated how easy it was to find a qualified person for each role (1–10), for hires made before our app. On a marketplace it still differs: some roles are scarce (drivers, art assistants) and some producers have a network to fall back on. Once the app has users, v2 replaces the survey rating with the app’s own data: applicants per post, days to fill, and how often posters re-book past crew.",
+  "value_title": "What it is worth (29 surveyed hires)",
+  "value_text": "Shortlists go to a pattern only while they pay for themselves: Trusted network up to $27 a post, Open search up to $49, Scramble up to $59. At $25 that is everyone; if shortlists cost $40, Trusted network drops out and matching wins.",
+  "value_head": ["Shortlist cost", "Plan", "Shortlists", "Hours saved", "Net value"],
+  "value_rows": [
+    ["$25 (base case)", "Baseline: shortlist for every poster", "29", "63", "+$535"],
+    ["$25 (base case)", "v1: by poster’s pattern", "29", "63", "+$535"],
+    ["$40 (what-if)", "Baseline: shortlist for every poster", "29", "63", "+$100"],
+    ["$40 (what-if)", "v1: by poster’s pattern", "18", "43", "+$140"]
+  ],
+  "foot": "How the numbers work (fictional assumptions): a role takes 1 hour of searching per point of difficulty (10 − ease); a curated shortlist halves that; a producer hour is worth $20; a shortlist costs the app $25. Net value = hours saved × $20 − shortlist cost. Each hire’s page is set only from that producer’s other hires, so the model never sees the hire it is judged on."
+}

@@ -15,33 +15,42 @@ To set the discover page for a new post: `python model.py 6` (any producer numbe
 
 ## Model
 - Family: k-means, k = 3. Features standardised on the training rows. No outcome column.
-- Features: `ease`, plus a 0/1 flag for each search method used in at least 10 hires (Asking Classmates, Asking Someone You Already Know, Asking Someone You've Worked With, Instagram ISOs, Word-of-mouth / Peer Recommendations).
-- Left out: rare methods (Tisch Database, Cold-Emailing, Facebook, WhatsApp, other social, used in 1–3 hires); performance, rehire and dropout (used to describe the segments); names, emails and free-text answers.
-- k chosen from the elbow on the training hires only: spread drops 46.5, then 27.5, then 10 or less per extra group, so it flattens after 3. The elbow is soft (an automatic second-difference rule narrowly prefers 2); 3 was chosen because 2 → 3 still removes 23% of the total spread. Test hires are assigned to the trained centres (no refit) to compare spread: baseline k = 1 56.7 vs v1 k = 3 42.4.
-- Baseline: one group (k = 1), so every filmmaker gets the same recommendations.
+- Features: a 0/1 flag for each search method used in at least 10 hires (Asking Classmates, Asking Someone You Already Know, Asking Someone You've Worked With, Instagram ISOs, Word-of-mouth / Peer Recommendations). The groups describe **how producers search**.
+- Not used to form groups: ease of finding, performance, rehire and dropouts. They describe and check the groups. Also left out: rare methods (Tisch Database, Cold-Emailing, Facebook, WhatsApp, other social, used in 1–3 hires); names, emails and free-text answers.
+- k chosen from the elbow on the training hires only: spread 100 → 61 → 34.4 → 26.4 → 19.5 → 13.5. Three groups remove 66%; each extra group after that removes 8 or less.
+- Test hires are assigned to the trained centres (no refit): baseline k = 1 spread 50.4 vs v1 k = 3 31.6 (37% lower).
+- Check: ease of finding was never an input, yet it differs across the groups (7.3 / 5.1 / 4.1 out of 10; Kruskal-Wallis p = 0.036). How a producer searches predicts how hard the role is to fill.
+- Baseline: one group (k = 1), so every filmmaker gets the same discover page.
+
+## What "ease of finding" means
+The survey rating (1–10) of how easy it was to find a qualified person for a role, for hires made **before** the app. It varies by role scarcity and by whether the producer has a network. v2 replaces it with the app's own data: applicants per post, days to fill, re-book rate.
 
 ## How the app uses it
-When someone posts a job, their **past hires** (ease of finding + search methods) are averaged and placed at the nearest trained centre. That hiring pattern sets their discover page:
+When someone posts a job, the search methods of their **past hires** are averaged and placed at the nearest trained centre. That hiring pattern sets their discover page:
 
-| Poster's pattern | Discover page | Producers in survey |
-|---|---|---|
-| Segment 1: Trusted network | Past collaborators first, and people they have worked with | 3 of 10 |
-| Segment 2: Open search | New candidates matched to the role | 5 of 10 |
-| Segment 3: Scramble | Verified, peer-reviewed candidates first | 2 of 10 |
+| Poster's pattern | Discover page | Producers in survey | Shortlist saves per post |
+|---|---|---|---|
+| Segment 1: Trusted network | Re-book page: past collaborators first | 3 of 10 | 1.4 hours |
+| Segment 2: Open search | Discovery feed of new candidates matched to the role | 4 of 10 | 2.5 hours |
+| Segment 3: Scramble | Curated shortlist first, then the discovery feed | 3 of 10 | 2.9 hours |
 
-`decide(past_hires)` returns `(pattern, discover page)`. `python model.py 6` runs it for producer 6 (DP, UPM, art director: Scramble).
-
-The verified-first page goes only to a pattern where verifying its hires nets positive under the assumptions below (only Scramble).
+`decide(past_hires)` returns `(pattern, discover page, curated shortlist?)`. `python model.py 6` runs it for producer 6 (DP, UPM, art director: Scramble).
 
 ## Value (FICTIONAL ASSUMPTIONS)
-The dollar figures are **made up for illustration**; they do not come from the survey.
-- ASSUMPTION: verifying a call costs $15.
-- ASSUMPTION: a last-minute dropout costs a production $300.
-- ASSUMPTION: verification prevents 50% of dropouts.
+The hour and dollar figures are **made up for illustration** and were fixed before computing results.
+- ASSUMPTION: a role takes 1 hour of searching per point of difficulty (10 − ease).
+- ASSUMPTION: a curated shortlist halves search time.
+- ASSUMPTION: a producer hour is worth $20.
+- ASSUMPTION: a shortlist costs the app $25.
 
-Applied role by role using the survey's dropout answer: a role with a dropout nets 0.5 × $300 − $15 = +$135 if verified, any other −$15. To test fairly, each hire's page is set only from that producer's **other** hires.
-- Baseline (same page for every poster, every call verified): 29 calls, 4 of 4 dropouts covered, +$165
-- v1 (page by poster's past pattern): 8 calls verified, 2 of 4 dropouts covered, +$180 (+$15, with 72% fewer verifications)
+Net value per post = hours saved × $20 − shortlist cost. Open search and Scramble hold 76% of all search hours (96 of 126). A pattern gets shortlists only while they pay for themselves: Trusted network up to $27 a post, Open search up to $49, Scramble up to $59. To test fairly, each hire's page is set only from that producer's **other** hires.
+
+| Shortlist cost | Plan | Shortlists | Hours saved | Net |
+|---|---|---|---|---|
+| $25 (base case) | Baseline: everyone | 29 | 63 | +$535 |
+| $25 (base case) | v1: by poster's pattern | 29 | 63 | +$535 |
+| $40 (what-if) | Baseline: everyone | 29 | 63 | +$100 |
+| $40 (what-if) | v1: by poster's pattern | 18 | 43 | +$140 |
 
 ## Data dictionary (`outputs/hires_clean.csv`)
 | Column | Survey question |
