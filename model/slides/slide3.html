@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Group 7 model slides</title>
+<style>
+@page { size: 13.333in 7.5in; margin: 0; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: #000; background: #fff; }
+.slide { width: 13.333in; height: 7.5in; padding: 0.45in 0.7in; page-break-after: always; overflow: hidden; position: relative; }
+h1 { font-size: 23pt; margin: 0 0 0.18in; line-height: 1.15; }
+h2 { font-size: 13pt; margin: 0 0 3pt; }
+p, li, td, th { font-size: 11pt; line-height: 1.28; margin: 0 0 3pt; }
+ul, ol { margin: 0; padding-left: 15pt; }
+.cols { display: flex; gap: 0.35in; }
+.col { flex: 1; }
+.seg { border: 1px solid #000; padding: 5pt 9pt; }
+.n { font-weight: normal; }
+.small, .small li { font-size: 9.5pt; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; vertical-align: top; }
+.big td, .big th { font-size: 13pt; padding: 5pt 6pt; }
+.title { display: flex; flex-direction: column; justify-content: center; }
+.title h1 { font-size: 30pt; }
+.title p { font-size: 16pt; margin: 4pt 0; }
+</style></head><body>
+
+<section class="slide">
+  <h1>Every filmmaker gets recommendations matched to how they hire, which could halve the time they spend searching for crew</h1>
+  <div class="cols" style="gap:0.45in">
+    <div class="col" style="flex:1.35">
+      <table class="big"><tr><th>Filmmaker type</th><th>How they hire today</th><th>What the app recommends</th></tr><tr><td>1 · Trusted network</td><td>Calls people they already know</td><td>Re-book: people they have worked with, and people those crew members recommend</td></tr><tr><td>2 · Open search</td><td>Posts publicly and asks for referrals</td><td>A feed of new people who fit the role</td></tr><tr><td>3 · Scramble</td><td>Tries everything; hardest roles to fill</td><td>A hand-picked shortlist of available, reviewed people</td></tr></table>
+      <p style="margin-top:10pt;font-size:13pt">When a filmmaker posts a job, the app looks at how they found crew before and picks the matching type of recommendations.</p>
+    </div>
+    <div class="col">
+      <div class="seg" style="padding:10pt 12pt">
+        <h2>Example: producer 6 needs an art director</h2>
+        <p>They hire like a Scramble filmmaker, and their last art director was rated 2 out of 10 to find.</p>
+        <table class="big"><tr><th></th><th>Hours spent searching</th></tr><tr><td>No help</td><td>8 hours</td></tr><tr><td>Same feed as everyone (baseline)</td><td>6 hours (saves 2)</td></tr><tr><td>Matched shortlist (v1)</td><td>4 hours (saves 4)</td></tr></table>
+      </div>
+      <h2 style="margin-top:16pt">Across all 29 surveyed hires</h2>
+      <table class="big"><tr><th>Plan</th><th>Search hours saved</th></tr><tr><td>Baseline: same feed for everyone</td><td>about 32 of 126</td></tr><tr><td>v1: recommendations matched to each filmmaker</td><td>63 of 126</td></tr></table>
+    </div>
+  </div>
+  <p class="small" style="position:absolute;left:0.7in;right:0.7in;bottom:0.4in">Made-up assumptions (not from the survey): a role takes 1 hour of searching per point of difficulty (a role rated 2 out of 10 takes 8 hours); the same feed for everyone cuts that by a quarter; recommendations matched to the filmmaker cut it in half.</p>
+</section>
+</body></html>

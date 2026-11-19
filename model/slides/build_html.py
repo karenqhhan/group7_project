@@ -31,6 +31,7 @@ ul, ol {{ margin: 0; padding-left: 15pt; }}
 .small, .small li {{ font-size: 9.5pt; }}
 table {{ border-collapse: collapse; width: 100%; }}
 th, td {{ border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; vertical-align: top; }}
+.big td, .big th {{ font-size: 13pt; padding: 5pt 6pt; }}
 .title {{ display: flex; flex-direction: column; justify-content: center; }}
 .title h1 {{ font-size: 30pt; }}
 .title p {{ font-size: 16pt; margin: 4pt 0; }}
@@ -55,22 +56,27 @@ th, td {{ border-bottom: 1px solid #000; padding: 3pt 5pt; text-align: left; ver
 
 <section class="slide">
   <h1>{E(C["s3_title"])}</h1>
-  <div class="cols">
-    <div class="col" style="flex:0.85">
-      <h2>{E(C["how_title"])}</h2><ol>{li(C["how"])}</ol>
-      <h2 style="margin-top:8pt">{E(C["example_title"])}</h2><p>{E(C["example"])}</p>
-      <h2 style="margin-top:8pt">{E(C["ease_title"])}</h2><p>{E(C["ease"])}</p>
+  <div class="cols" style="gap:0.45in">
+    <div class="col" style="flex:1.35">
+      <table class="big">{rows(C["recs_head"], C["recs"])}</table>
+      <p style="margin-top:10pt;font-size:13pt">{E(C["how_line"])}</p>
     </div>
-    <div class="col" style="flex:1.5">
-      <table>{rows(C["pages_head"], C["pages"])}</table>
-      <h2 style="margin-top:12pt">{E(C["value_title"])}</h2>
-      <p>{E(C["value_text"])}</p>
-      <table>{rows(C["value_head"], C["value_rows"])}</table>
+    <div class="col">
+      <div class="seg" style="padding:10pt 12pt">
+        <h2>{E(C["ex_title"])}</h2>
+        <p>{E(C["ex_intro"])}</p>
+        <table class="big">{rows(C["ex_head"], C["ex_rows"])}</table>
+      </div>
+      <h2 style="margin-top:16pt">{E(C["tot_title"])}</h2>
+      <table class="big">{rows(C["tot_head"], C["tot_rows"])}</table>
     </div>
   </div>
-  <p class="small" style="position:absolute;left:0.7in;right:0.7in;bottom:0.35in">{E(C["foot"])}</p>
+  <p class="small" style="position:absolute;left:0.7in;right:0.7in;bottom:0.4in">{E(C["foot"])}</p>
 </section>
 </body></html>
 """
 (HERE / "slides.html").write_text(html)
-print("wrote slides.html")
+head, rest = html.split("<section", 1)
+only3 = head + "<section" + rest.split("<section")[-1]
+(HERE / "slide3.html").write_text(only3)
+print("wrote slides.html and slide3.html")

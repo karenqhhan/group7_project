@@ -26,31 +26,23 @@ To set the discover page for a new post: `python model.py 6` (any producer numbe
 The survey rating (1–10) of how easy it was to find a qualified person for a role, for hires made **before** the app. It varies by role scarcity and by whether the producer has a network. v2 replaces it with the app's own data: applicants per post, days to fill, re-book rate.
 
 ## How the app uses it
-When someone posts a job, the search methods of their **past hires** are averaged and placed at the nearest trained centre. That hiring pattern sets their discover page:
+Every poster gets recommendations; the **type** depends on their hiring pattern. When someone posts a job, the search methods of their past hires are averaged and placed at the nearest trained centre:
 
-| Poster's pattern | Discover page | Producers in survey | Shortlist saves per post |
-|---|---|---|---|
-| Segment 1: Trusted network | Re-book page: past collaborators first | 3 of 10 | 1.4 hours |
-| Segment 2: Open search | Discovery feed of new candidates matched to the role | 4 of 10 | 2.5 hours |
-| Segment 3: Scramble | Curated shortlist first, then the discovery feed | 3 of 10 | 2.9 hours |
+| Poster's pattern | Recommendations | Producers in survey |
+|---|---|---|
+| Segment 1: Trusted network | Re-book: people they have worked with, and people those crew members recommend | 3 of 10 |
+| Segment 2: Open search | A feed of new people who fit the role | 4 of 10 |
+| Segment 3: Scramble | A hand-picked shortlist of available, reviewed people | 3 of 10 |
 
-`decide(past_hires)` returns `(pattern, discover page, curated shortlist?)`. `python model.py 6` runs it for producer 6 (DP, UPM, art director: Scramble).
+`decide(past_hires)` returns `(pattern, recommendations)`. `python model.py 6` runs it for producer 6 (DP, UPM, art director: Scramble).
 
 ## Value (FICTIONAL ASSUMPTIONS)
-The hour and dollar figures are **made up for illustration** and were fixed before computing results.
-- ASSUMPTION: a role takes 1 hour of searching per point of difficulty (10 − ease).
-- ASSUMPTION: a curated shortlist halves search time.
-- ASSUMPTION: a producer hour is worth $20.
-- ASSUMPTION: a shortlist costs the app $25.
+The hour figures are **made up for illustration**.
+- ASSUMPTION: a role takes 1 hour of searching per point of difficulty (10 − ease); a role rated 2 takes 8 hours.
+- ASSUMPTION: the same generic feed for everyone (baseline) cuts search time by 25%.
+- ASSUMPTION: recommendations matched to the poster's pattern (v1) cut it by 50%.
 
-Net value per post = hours saved × $20 − shortlist cost. Open search and Scramble hold 76% of all search hours (96 of 126). A pattern gets shortlists only while they pay for themselves: Trusted network up to $27 a post, Open search up to $49, Scramble up to $59. To test fairly, each hire's page is set only from that producer's **other** hires.
-
-| Shortlist cost | Plan | Shortlists | Hours saved | Net |
-|---|---|---|---|---|
-| $25 (base case) | Baseline: everyone | 29 | 63 | +$535 |
-| $25 (base case) | v1: by poster's pattern | 29 | 63 | +$535 |
-| $40 (what-if) | Baseline: everyone | 29 | 63 | +$100 |
-| $40 (what-if) | v1: by poster's pattern | 18 | 43 | +$140 |
+Example: producer 6's art director (rated 2 out of 10) takes 8 hours with no help, 6 with the generic feed, 4 with a matched shortlist. Across all 29 hires (126 search hours): baseline saves 31.5 hours, v1 saves 63.
 
 ## Data dictionary (`outputs/hires_clean.csv`)
 | Column | Survey question |
