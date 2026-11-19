@@ -98,60 +98,19 @@
   "value": {
     "assumptions_FICTIONAL": {
       "hours_per_difficulty_point": 1.0,
-      "shortlist_cut": 0.5,
-      "hour_value": 20.0,
-      "shortlist_cost": 25.0
-    },
-    "search_hours_by_pattern": {
-      "Segment 1": 30.0,
-      "Segment 2": 49.0,
-      "Segment 3": 47.0
+      "generic_feed_cut": 0.25,
+      "matched_cut": 0.5
     },
     "search_hours_total": 126.0,
-    "hours_saved_per_post": {
-      "Segment 1": 1.36,
-      "Segment 2": 2.45,
-      "Segment 3": 2.94
-    },
-    "breakeven_shortlist_cost": {
-      "Segment 1": 27.27,
-      "Segment 2": 49.0,
-      "Segment 3": 58.75
-    },
-    "scenarios": {
-      "25.0": {
-        "patterns_with_shortlist": [
-          "Segment 1",
-          "Segment 2",
-          "Segment 3"
-        ],
-        "baseline_everyone": {
-          "shortlists": 29,
-          "hours_saved": 63.0,
-          "net": 535.0
-        },
-        "v1_by_pattern": {
-          "shortlists": 29,
-          "hours_saved": 63.0,
-          "net": 535.0
-        }
-      },
-      "40.0": {
-        "patterns_with_shortlist": [
-          "Segment 2",
-          "Segment 3"
-        ],
-        "baseline_everyone": {
-          "shortlists": 29,
-          "hours_saved": 63.0,
-          "net": 100.0
-        },
-        "v1_by_pattern": {
-          "shortlists": 18,
-          "hours_saved": 43.0,
-          "net": 140.0
-        }
-      }
+    "baseline_same_feed_hours_saved": 31.5,
+    "v1_matched_hours_saved": 63.0,
+    "example": {
+      "producer": 6,
+      "role": "Art Director",
+      "ease": 2.0,
+      "search_hours": 8.0,
+      "generic_saves": 2.0,
+      "matched_saves": 4.0
     },
     "producer_patterns": {
       "1": "Trusted network",

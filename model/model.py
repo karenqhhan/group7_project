@@ -91,69 +91,41 @@ def poster_pattern(past_hires):
     return label[model.predict(scaler.transform(avg))[0]]
 
 
+# ------------------------------------------------------------------ decision function
+# Every poster gets recommendations; the TYPE depends on their hiring pattern.
+RECOMMENDATIONS = {
+    "Segment 1": "Re-book: people they have worked with, and people those crew members recommend",
+    "Segment 2": "Feed of new people who fit the role",
+    "Segment 3": "Hand-picked shortlist of available, reviewed people",
+}
+
+
+def decide(past_hires):
+    """New job post: the poster's past hires -> (pattern, recommendations they get)."""
+    seg = poster_pattern(past_hires)
+    return f"{seg} ({NAMES[seg]})", RECOMMENDATIONS[seg]
+
+
 # ------------------------------------------------------------------ value: FICTIONAL ASSUMPTIONS
-# None of these figures come from the survey. They were fixed before computing results
-# and must be labelled as assumptions on the slides.
-ASSUMED_HOURS_PER_POINT = 1.0    # ASSUMPTION: search hours = 1 x (10 - ease); ease 10 = no search
-ASSUMED_SHORTLIST_CUT = 0.5      # ASSUMPTION: a curated shortlist halves search time
-ASSUMED_HOUR_VALUE = 20.0        # ASSUMPTION: $ value of one producer hour
-ASSUMED_SHORTLIST_COST = 25.0    # ASSUMPTION: $ cost to the app of one curated shortlist
+# None of these figures come from the survey; they must be labelled as assumptions.
+ASSUMED_HOURS_PER_POINT = 1.0   # ASSUMPTION: search hours = 1 x (10 - ease); a role rated 2 takes 8 hours
+ASSUMED_GENERIC_CUT = 0.25      # ASSUMPTION: the same generic feed for everyone cuts search time by 25%
+ASSUMED_MATCHED_CUT = 0.50      # ASSUMPTION: recommendations matched to the poster's pattern cut it by 50%
 
 hires["search_hours"] = ASSUMED_HOURS_PER_POINT * (10 - hires["ease"])
-hires["hours_saved"] = ASSUMED_SHORTLIST_CUT * hires["search_hours"]
-
-
-def pattern_gets_shortlist(cost):
-    """Patterns where shortlists pay for themselves at this cost (summed over their hires)."""
-    net = (hires["hours_saved"] * ASSUMED_HOUR_VALUE - cost).groupby(hires["segment"]).sum()
-    return sorted(net[net > 0].index)
-
-
-# Cost at which each pattern stops paying off: hours saved x hour value / hires.
-breakeven = (hires.groupby("segment")["hours_saved"].mean() * ASSUMED_HOUR_VALUE).round(2).to_dict()
-
-# Simulate the app on the survey: each hire's page is set from that producer's OTHER
-# hires only (their past pattern), never the hire being judged.
-hires["poster_pattern"] = [
-    poster_pattern(hires[(hires.producer == r.producer) & (hires.index != i)]) for i, r in hires.iterrows()
-]
-
-
-def plan(cost, targeted):
-    gets = hires["poster_pattern"].isin(pattern_gets_shortlist(cost)) if targeted else pd.Series(True, hires.index)
-    sub = hires[gets]
-    return {"shortlists": int(gets.sum()), "hours_saved": float(sub.hours_saved.sum()),
-            "net": float((sub.hours_saved * ASSUMED_HOUR_VALUE - cost).sum())}
-
-
-SCENARIO_COSTS = [ASSUMED_SHORTLIST_COST, 40.0]  # base case plus a higher-cost what-if
+example = hires[(hires.producer == 6) & (hires.role == "Art Director")].iloc[0]
 value = {
     "assumptions_FICTIONAL": {"hours_per_difficulty_point": ASSUMED_HOURS_PER_POINT,
-                              "shortlist_cut": ASSUMED_SHORTLIST_CUT, "hour_value": ASSUMED_HOUR_VALUE,
-                              "shortlist_cost": ASSUMED_SHORTLIST_COST},
-    "search_hours_by_pattern": hires.groupby("segment")["search_hours"].sum().to_dict(),
+                              "generic_feed_cut": ASSUMED_GENERIC_CUT, "matched_cut": ASSUMED_MATCHED_CUT},
     "search_hours_total": float(hires["search_hours"].sum()),
-    "hours_saved_per_post": hires.groupby("segment")["hours_saved"].mean().round(2).to_dict(),
-    "breakeven_shortlist_cost": breakeven,
-    "scenarios": {str(c): {"patterns_with_shortlist": pattern_gets_shortlist(c),
-                           "baseline_everyone": plan(c, False), "v1_by_pattern": plan(c, True)}
-                  for c in SCENARIO_COSTS},
+    "baseline_same_feed_hours_saved": float(ASSUMED_GENERIC_CUT * hires["search_hours"].sum()),
+    "v1_matched_hours_saved": float(ASSUMED_MATCHED_CUT * hires["search_hours"].sum()),
+    "example": {"producer": 6, "role": example.role, "ease": float(example.ease),
+                "search_hours": float(example.search_hours),
+                "generic_saves": ASSUMED_GENERIC_CUT * float(example.search_hours),
+                "matched_saves": ASSUMED_MATCHED_CUT * float(example.search_hours)},
     "producer_patterns": {int(p): NAMES[poster_pattern(g)] for p, g in hires.groupby("producer")},
 }
-
-# ------------------------------------------------------------------ decision function
-DISCOVER_PAGE = {
-    "Segment 1": "Re-book page: past collaborators first, then people they have worked with",
-    "Segment 2": "Discovery feed: new candidates matched to the role",
-    "Segment 3": "Curated shortlist first: hand-picked available candidates, then the discovery feed",
-}
-
-
-def decide(past_hires, shortlist_cost=ASSUMED_SHORTLIST_COST):
-    """New job post: the poster's past hires -> (pattern, discover page, curated shortlist?)."""
-    seg = poster_pattern(past_hires)
-    return f"{seg} ({NAMES[seg]})", DISCOVER_PAGE[seg], seg in pattern_gets_shortlist(shortlist_cost)
-
 
 # ------------------------------------------------------------------ chart
 plt.rcParams.update({"font.family": "Arial", "font.size": 13})

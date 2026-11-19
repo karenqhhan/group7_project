@@ -18,7 +18,9 @@ const table = (s, head, body, o) => s.addTable([head.map(h => cell(h, true)), ..
   { fontSize: 11, color: K, fontFace: "Arial", margin: [2, 4, 2, 4], ...o });
 
 // ---------------------------------------------------------------- 1 Title
-let s = pres.addSlide();
+let s;
+if (!process.env.ONLY3) {
+s = pres.addSlide();
 s.addText(C.title, { ...box, x: X, y: 1.8, w: W, h: 2.0, fontSize: 30, bold: true });
 s.addText(C.title_lines.map((t, i, a) => ({ text: t, options: { breakLine: i < a.length - 1 } })),
   { ...box, x: X, y: 4.0, w: W, h: 1.3, fontSize: 16, paraSpaceAfter: 6 });
@@ -41,21 +43,19 @@ text(s, C.proof.map(([b, t], i, a) => [
   { text: b, options: { bold: true, bullet: true } }, { text: t, options: { breakLine: i < a.length - 1 } }]).flat(),
   { x: PX, y: 1.78 + CH, w: PW, h: 7.15 - (1.78 + CH), fontSize: 9.5, paraSpaceAfter: 2 });
 
-// ---------------------------------------------------------------- 3 Personalization + value
+}
+// ---------------------------------------------------------------- 3 Recommendations + value
 s = pres.addSlide();
 title(s, C.s3_title);
-const LW = 4.45, RX = X + LW + 0.35, RW = W - LW - 0.35;
-const head = (t, y) => text(s, t, { x: X, y, w: LW, h: 0.26, fontSize: 13, bold: true });
-head(C.how_title, 1.42);
-text(s, list(C.how, true), { x: X, y: 1.7, w: LW, h: 1.05, paraSpaceAfter: 2 });
-head(C.example_title, 2.78);
-text(s, C.example, { x: X, y: 3.05, w: LW, h: 1.0 });
-head(C.ease_title, 4.1);
-text(s, C.ease, { x: X, y: 4.37, w: LW, h: 2.0 });
-table(s, C.pages_head, C.pages, { x: RX, y: 1.42, w: RW, colW: [1.75, 2.7, RW - 4.45] });
-text(s, C.value_title, { x: RX, y: 3.55, w: RW, h: 0.26, fontSize: 13, bold: true });
-text(s, C.value_text, { x: RX, y: 3.83, w: RW, h: 0.62 });
-table(s, C.value_head, C.value_rows, { x: RX, y: 4.5, w: RW, colW: [1.45, RW - 4.45, 1.0, 1.05, 0.95] });
-text(s, C.foot, { x: X, y: 6.55, w: W, h: 0.6, fontSize: 9.5 });
+const LW = 6.6, RX = X + LW + 0.45, RW = W - LW - 0.45;
+table(s, C.recs_head, C.recs, { x: X, y: 1.5, w: LW, colW: [1.7, 2.2, LW - 3.9], fontSize: 13, margin: [4, 5, 4, 5] });
+text(s, C.how_line, { x: X, y: 4.3, w: LW, h: 0.7, fontSize: 13 });
+s.addShape(pres.shapes.RECTANGLE, { x: RX, y: 1.5, w: RW, h: 2.55, fill: { color: "FFFFFF" }, line: { color: K, width: 0.75 } });
+text(s, C.ex_title, { x: RX + 0.15, y: 1.6, w: RW - 0.3, h: 0.3, fontSize: 13, bold: true });
+text(s, C.ex_intro, { x: RX + 0.15, y: 1.92, w: RW - 0.3, h: 0.5 });
+table(s, C.ex_head, C.ex_rows, { x: RX + 0.15, y: 2.45, w: RW - 0.3, colW: [RW - 2.4, 2.1], fontSize: 13, margin: [4, 5, 4, 5] });
+text(s, C.tot_title, { x: RX, y: 4.3, w: RW, h: 0.3, fontSize: 13, bold: true });
+table(s, C.tot_head, C.tot_rows, { x: RX, y: 4.65, w: RW, colW: [RW - 1.9, 1.9], fontSize: 13, margin: [4, 5, 4, 5] });
+text(s, C.foot, { x: X, y: 6.6, w: W, h: 0.5, fontSize: 10 });
 
-pres.writeFile({ fileName: path.join(__dirname, "group7_model_slides.pptx") }).then(f => console.log("wrote", f));
+pres.writeFile({ fileName: path.join(__dirname, process.env.ONLY3 ? "slide3.pptx" : "group7_model_slides.pptx") }).then(f => console.log("wrote", f));
