@@ -19,14 +19,8 @@
     "5": 28.5,
     "6": 22.0
   },
-  "test_sse": {
-    "1": 56.7,
-    "2": 51.4,
-    "3": 42.4,
-    "4": 43.2,
-    "5": 35.9,
-    "6": 34.2
-  },
+  "test_sse_baseline_k1": 56.7,
+  "test_sse_v1": 42.4,
   "test_sse_drop_pct_k1_to_k": 25.3,
   "centers": [
     {
@@ -115,17 +109,31 @@
       "Segment 2": -165.0,
       "Segment 3": 345.0
     },
-    "vet_segments": [
+    "verified_first_patterns": [
       "Segment 3"
     ],
-    "baseline_vet_everyone": {
-      "hires_vetted": 29,
+    "baseline_verify_everyone": {
+      "calls_verified": 29,
+      "dropouts_covered": 4,
       "net": 165.0
     },
-    "v1_vet_targeted": {
-      "hires_vetted": 7,
-      "net": 345.0
+    "v1_by_poster_pattern": {
+      "calls_verified": 8,
+      "dropouts_covered": 2,
+      "net": 180.0
     },
-    "v1_minus_baseline": 180.0
+    "v1_minus_baseline": 15.0,
+    "producer_patterns_all_hires": {
+      "1": "Open search",
+      "2": "Open search",
+      "3": "Trusted network",
+      "4": "Open search",
+      "5": "Trusted network",
+      "6": "Scramble",
+      "7": "Trusted network",
+      "8": "Scramble",
+      "9": "Open search",
+      "10": "Open search"
+    }
   }
 }
