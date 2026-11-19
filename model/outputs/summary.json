@@ -4,7 +4,6 @@
   "train_n": 20,
   "test_n": 9,
   "features": [
-    "ease",
     "Asking Classmates",
     "Asking Someone You Already Know",
     "Asking Someone You've Worked With",
@@ -12,46 +11,44 @@
     "Word-of-mouth / Peer Recommendations"
   ],
   "train_sse": {
-    "1": 120.0,
-    "2": 73.5,
-    "3": 46.0,
-    "4": 36.0,
-    "5": 28.5,
-    "6": 22.0
+    "1": 100.0,
+    "2": 61.0,
+    "3": 34.4,
+    "4": 26.4,
+    "5": 19.5,
+    "6": 13.5
   },
-  "test_sse_baseline_k1": 56.7,
-  "test_sse_v1": 42.4,
-  "test_sse_drop_pct_k1_to_k": 25.3,
+  "test_sse_baseline_k1": 50.4,
+  "test_sse_v1": 31.6,
+  "test_sse_drop_pct_k1_to_k": 37.3,
   "centers": [
     {
-      "ease": 7.86,
-      "Asking Classmates": 0.0,
-      "Asking Someone You Already Know": 1.0,
-      "Asking Someone You've Worked With": 0.43,
-      "Instagram ISOs (\"In Search Of\")": 0.0,
+      "Asking Classmates": -0.0,
+      "Asking Someone You Already Know": 0.88,
+      "Asking Someone You've Worked With": 0.38,
+      "Instagram ISOs (\"In Search Of\")": -0.0,
       "Word-of-mouth / Peer Recommendations": -0.0,
       "segment": "Segment 1"
     },
     {
-      "ease": 3.17,
+      "Asking Classmates": 0.33,
+      "Asking Someone You Already Know": 0.17,
+      "Asking Someone You've Worked With": 0.0,
+      "Instagram ISOs (\"In Search Of\")": 0.83,
+      "Word-of-mouth / Peer Recommendations": 0.83,
+      "segment": "Segment 2"
+    },
+    {
       "Asking Classmates": 1.0,
       "Asking Someone You Already Know": 1.0,
       "Asking Someone You've Worked With": 1.0,
       "Instagram ISOs (\"In Search Of\")": 0.5,
       "Word-of-mouth / Peer Recommendations": 1.0,
       "segment": "Segment 3"
-    },
-    {
-      "ease": 6.0,
-      "Asking Classmates": 0.29,
-      "Asking Someone You Already Know": 0.14,
-      "Asking Someone You've Worked With": 0.0,
-      "Instagram ISOs (\"In Search Of\")": 0.71,
-      "Word-of-mouth / Peer Recommendations": 0.71,
-      "segment": "Segment 2"
     }
   ],
   "baseline_one_group": {
+    "ease": 5.655,
     "performance": 8.241,
     "rehire_yes": 0.793,
     "flaked_yes": 0.138,
@@ -61,74 +58,107 @@
     {
       "segment": "Segment 1",
       "hires": 11,
-      "ease": 7.36,
-      "Asking Classmates": 0.09,
-      "Asking Someone You Already Know": 0.91,
-      "Asking Someone You've Worked With": 0.64,
+      "Asking Classmates": 0.0,
+      "Asking Someone You Already Know": 0.82,
+      "Asking Someone You've Worked With": 0.55,
       "Instagram ISOs (\"In Search Of\")": 0.0,
       "Word-of-mouth / Peer Recommendations": 0.0,
+      "ease": 7.27,
       "performance": 9.55,
       "rehire_yes": 0.91,
       "flaked_yes": 0.09
     },
     {
       "segment": "Segment 2",
-      "hires": 11,
-      "ease": 5.09,
-      "Asking Classmates": 0.45,
-      "Asking Someone You Already Know": 0.09,
+      "hires": 10,
+      "Asking Classmates": 0.5,
+      "Asking Someone You Already Know": 0.1,
       "Asking Someone You've Worked With": 0.0,
-      "Instagram ISOs (\"In Search Of\")": 0.73,
-      "Word-of-mouth / Peer Recommendations": 0.73,
-      "performance": 7.45,
-      "rehire_yes": 0.82,
+      "Instagram ISOs (\"In Search Of\")": 0.8,
+      "Word-of-mouth / Peer Recommendations": 0.8,
+      "ease": 5.1,
+      "performance": 7.4,
+      "rehire_yes": 0.8,
       "flaked_yes": 0.0
     },
     {
       "segment": "Segment 3",
-      "hires": 7,
-      "ease": 3.86,
+      "hires": 8,
       "Asking Classmates": 1.0,
       "Asking Someone You Already Know": 1.0,
-      "Asking Someone You've Worked With": 0.86,
-      "Instagram ISOs (\"In Search Of\")": 0.43,
-      "Word-of-mouth / Peer Recommendations": 1.0,
-      "performance": 7.43,
-      "rehire_yes": 0.57,
-      "flaked_yes": 0.43
+      "Asking Someone You've Worked With": 0.88,
+      "Instagram ISOs (\"In Search Of\")": 0.38,
+      "Word-of-mouth / Peer Recommendations": 0.88,
+      "ease": 4.12,
+      "performance": 7.5,
+      "rehire_yes": 0.62,
+      "flaked_yes": 0.38
     }
   ],
   "value": {
     "assumptions_FICTIONAL": {
-      "vet_cost": 15.0,
-      "flake_cost": 300.0,
-      "flakes_prevented": 0.5
+      "hours_per_difficulty_point": 1.0,
+      "shortlist_cut": 0.5,
+      "hour_value": 20.0,
+      "shortlist_cost": 25.0
     },
-    "segment_net_if_vetted": {
-      "Segment 1": -15.0,
-      "Segment 2": -165.0,
-      "Segment 3": 345.0
+    "search_hours_by_pattern": {
+      "Segment 1": 30.0,
+      "Segment 2": 49.0,
+      "Segment 3": 47.0
     },
-    "verified_first_patterns": [
-      "Segment 3"
-    ],
-    "baseline_verify_everyone": {
-      "calls_verified": 29,
-      "dropouts_covered": 4,
-      "net": 165.0
+    "search_hours_total": 126.0,
+    "hours_saved_per_post": {
+      "Segment 1": 1.36,
+      "Segment 2": 2.45,
+      "Segment 3": 2.94
     },
-    "v1_by_poster_pattern": {
-      "calls_verified": 8,
-      "dropouts_covered": 2,
-      "net": 180.0
+    "breakeven_shortlist_cost": {
+      "Segment 1": 27.27,
+      "Segment 2": 49.0,
+      "Segment 3": 58.75
     },
-    "v1_minus_baseline": 15.0,
-    "producer_patterns_all_hires": {
-      "1": "Open search",
+    "scenarios": {
+      "25.0": {
+        "patterns_with_shortlist": [
+          "Segment 1",
+          "Segment 2",
+          "Segment 3"
+        ],
+        "baseline_everyone": {
+          "shortlists": 29,
+          "hours_saved": 63.0,
+          "net": 535.0
+        },
+        "v1_by_pattern": {
+          "shortlists": 29,
+          "hours_saved": 63.0,
+          "net": 535.0
+        }
+      },
+      "40.0": {
+        "patterns_with_shortlist": [
+          "Segment 2",
+          "Segment 3"
+        ],
+        "baseline_everyone": {
+          "shortlists": 29,
+          "hours_saved": 63.0,
+          "net": 100.0
+        },
+        "v1_by_pattern": {
+          "shortlists": 18,
+          "hours_saved": 43.0,
+          "net": 140.0
+        }
+      }
+    },
+    "producer_patterns": {
+      "1": "Trusted network",
       "2": "Open search",
       "3": "Trusted network",
       "4": "Open search",
-      "5": "Trusted network",
+      "5": "Scramble",
       "6": "Scramble",
       "7": "Trusted network",
       "8": "Scramble",
