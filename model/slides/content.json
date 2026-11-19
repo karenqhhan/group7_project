@@ -5,57 +5,57 @@
     "[Members]",
     "github.com/karenqhhan/group7_project · model script: model/model.py"
   ],
-  "s2_title": "Student filmmakers search for crew in three distinct ways, and how they search predicts how hard the role is to fill",
+  "s2_title": "Filmmakers find crew in three different ways, and the way they search shows how hard the role is to fill",
   "segs": [
     [
       "1 · Trusted network",
-      "11 hires · 3 of 10 producers",
+      "11 hires · 3 producers",
       "“I already know who to call.”",
       [
-        "How they search: only their own circle; 82% asked someone they already knew, 55% someone they had worked with, and no other channel",
-        "Results: easiest to fill (7.3 out of 10, where 10 = very easy); hires rated 9.5 out of 10; 91% would hire again; 1 of 11 roles had a last-minute dropout"
+        "Search: only people they know or have worked with",
+        "Result: easiest to fill (7.3 / 10); best hires (9.5 / 10); 91% would hire again"
       ]
     ],
     [
       "2 · Open search",
-      "10 hires · 4 of 10 producers",
+      "10 hires · 4 producers",
       "“I need someone new.”",
       [
-        "How they search: in public; 80% posted Instagram ISOs, 80% asked for referrals, only 1 of 10 asked someone they knew. Mostly specialist and support roles (art, gaffer, grip, colorist, makeup)",
-        "Results: moderately hard to fill (5.1 out of 10); hires rated 7.4; 80% would hire again; no dropouts"
+        "Search: Instagram posts and referrals (80% each); mostly specialist roles like art, gaffer, colorist",
+        "Result: medium to fill (5.1 / 10); hires 7.4 / 10; no dropouts"
       ]
     ],
     [
       "3 · Scramble",
-      "8 hires · 3 of 10 producers",
+      "8 hires · 3 producers",
       "“I’m trying everything.”",
       [
-        "How they search: every channel at once; all asked classmates and people they knew, 7 of 8 also asked for referrals. 5 of 8 were senior or advanced productions",
-        "Results: hardest to fill (4.1 out of 10); hires rated 7.5; 63% would hire again; 3 of 8 roles had a last-minute dropout"
+        "Search: every channel at once; mostly senior productions",
+        "Result: hardest to fill (4.1 / 10); 3 of 8 roles had a last-minute dropout"
       ]
     ]
   ],
-  "proof_title": "Proof: the three patterns are real",
+  "proof_title": "Why we trust these groups",
   "proof": [
     [
-      "How the groups were found: ",
-      "a clustering model (k-means) sorted the 29 hires into groups of similar hires using only how the producer searched: the 5 most used search methods. Ease of finding, ratings and dropouts were left out, so they are a fair check on the groups."
+      "How: ",
+      "a clustering model grouped all 29 hires by how the producer searched. It never saw how hard the role was or how it went."
     ],
     [
-      "Why three groups: ",
-      "the chart shows how much hires still differ from their group (lower = tighter). Three groups cut that from 100 to 34, a 66% drop; each extra group after that helps by 8 or less."
+      "Three groups: ",
+      "the line drops sharply up to 3 groups, then flattens. More groups add little."
     ],
     [
-      "Does it hold for new hires? ",
-      "We hid 9 of the 29 hires (about 30%) while building the groups, then sorted them in afterwards. Three groups described them 37% better than one group for everyone (50.4 → 31.6)."
+      "Better than one group: ",
+      "3 groups cut the differences within each group by 59% compared with treating everyone the same (145 → 60)."
     ],
     [
       "Search predicts difficulty: ",
-      "the model never saw ease of finding, yet the groups split cleanly on it (7.3 vs 5.1 vs 4.1 out of 10). A gap this large would happen by chance less than 4% of the time."
+      "groups split cleanly on ease of finding (7.3 / 5.1 / 4.1, 10 = easy), which the model never saw."
     ],
     [
       "Data: ",
-      "our NYU Student Film Crewing Survey, answered Oct–Nov 2026 about past productions: 10 producers, 29 hires."
+      "our survey of 10 NYU student producers, Oct–Nov 2026. All 29 hires used (fewer than 30, so no test split)."
     ]
   ],
   "s3_title": "Every filmmaker gets recommendations matched to how they hire, which could halve the time they spend searching for crew",

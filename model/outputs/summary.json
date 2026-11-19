@@ -1,8 +1,7 @@
 {
   "hires": 29,
   "producers": 10,
-  "train_n": 20,
-  "test_n": 9,
+  "split": "none (29 hires < 30): fitted on all hires",
   "features": [
     "Asking Classmates",
     "Asking Someone You Already Know",
@@ -10,40 +9,38 @@
     "Instagram ISOs (\"In Search Of\")",
     "Word-of-mouth / Peer Recommendations"
   ],
-  "train_sse": {
-    "1": 100.0,
-    "2": 61.0,
-    "3": 34.4,
-    "4": 26.4,
-    "5": 19.5,
-    "6": 13.5
+  "sse": {
+    "1": 145.0,
+    "2": 92.7,
+    "3": 60.1,
+    "4": 47.1,
+    "5": 36.3,
+    "6": 28.4
   },
-  "test_sse_baseline_k1": 50.4,
-  "test_sse_v1": 31.6,
-  "test_sse_drop_pct_k1_to_k": 37.3,
+  "sse_drop_pct_k1_to_k": 58.5,
   "centers": [
     {
-      "Asking Classmates": -0.0,
-      "Asking Someone You Already Know": 0.88,
-      "Asking Someone You've Worked With": 0.38,
+      "Asking Classmates": 0.0,
+      "Asking Someone You Already Know": 0.82,
+      "Asking Someone You've Worked With": 0.55,
       "Instagram ISOs (\"In Search Of\")": -0.0,
-      "Word-of-mouth / Peer Recommendations": -0.0,
+      "Word-of-mouth / Peer Recommendations": 0.0,
       "segment": "Segment 1"
     },
     {
-      "Asking Classmates": 0.33,
-      "Asking Someone You Already Know": 0.17,
+      "Asking Classmates": 0.5,
+      "Asking Someone You Already Know": 0.1,
       "Asking Someone You've Worked With": 0.0,
-      "Instagram ISOs (\"In Search Of\")": 0.83,
-      "Word-of-mouth / Peer Recommendations": 0.83,
+      "Instagram ISOs (\"In Search Of\")": 0.8,
+      "Word-of-mouth / Peer Recommendations": 0.8,
       "segment": "Segment 2"
     },
     {
       "Asking Classmates": 1.0,
       "Asking Someone You Already Know": 1.0,
-      "Asking Someone You've Worked With": 1.0,
-      "Instagram ISOs (\"In Search Of\")": 0.5,
-      "Word-of-mouth / Peer Recommendations": 1.0,
+      "Asking Someone You've Worked With": 0.88,
+      "Instagram ISOs (\"In Search Of\")": 0.38,
+      "Word-of-mouth / Peer Recommendations": 0.88,
       "segment": "Segment 3"
     }
   ],
